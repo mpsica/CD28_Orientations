@@ -10,7 +10,7 @@ Third, the R script do the analysis with the coordinates of the CA atoms.
 
 The R scripts (analisys.R) is autoexplanatory. Briefly, after proper rearrangement of the input information, the script compute the coords of two vectors: 
 
-- Vector 1 between_CAs of residues 102 and 89 of CD28 or CTLA4
-- Vector 2 between_CAs of residues 102 and 18 of CD28 or CTLA4
+- Vector 1: between CAs of residues 102 and 89 of CD28 or CTLA4
+- Vector 2: between CAs of residues 102 and 18 of CD28 or CTLA4
 
 This positions are choosed because they are conserved in CD28 or CTLA4. The orientation of CD28 or CTLA4 about CD80 is followed by the normal vector of the plane formed by Vector 1 and Vector 2. The tip of the vector is plotted in a 3D plot.

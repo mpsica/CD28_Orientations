@@ -90,11 +90,14 @@ for (input in input_list){
   Vec_1 <- dist_between_CAs(A,102,89)
   Vec_2 <- dist_between_CAs(A,102,18)
   
+  Result <- cbind(CrossProduct(Vec_1,Vec_2),Modulo(A,102))
+                  
+  # Saving result to csv files
+  # Columns: x,y,z,modulo
+  write.csv(Result,file = paste0(filename,'.cvs'),row.names = F)
+  
   Tips <- rbind(Tips,
-              cbind(CrossProduct(Vec_1,Vec_2),
-                    Modulo(A,102),
-                    rep(color,N_frames)
-                    )
+              cbind(Result,rep(color,N_frames))
               )
   }
 
@@ -127,4 +130,6 @@ aspect3d(1,1,1)
 legend3d("topright", legend = Labs[colors],
          pch = 16, col = pallete[colors] , cex=1)
 rglwidget()  
+
+
 

@@ -6,6 +6,31 @@ rm(list=ls(all=TRUE))
 
 # setwd("") 
 
+
+##### INPUT INFORMATION  ############
+# Add the information from the preprocess.sh output in the input_list
+  # Filename = [filename].dat
+  # Number of CA atoms = xxx
+  # Number of frames = xxx
+
+# The input files (.dat format) contain the have 3 columns: xyz coordinates
+# of every CA atom, of every recorded frame.
+# Input files are produce with a bash script from the .gro obtained 
+# from the simulations
+
+# The items in the input list are:
+  #   input filename (.dat)
+  #   Number of CA atoms in the system
+  #   Number of frames recorded
+  #   A color code (1,2,...)
+
+input_list = list(
+  "CD28_CD80N_pH5" = c("CD28-CD80N_pH5.dat",224,101,1),
+  "CD28_CD80N_pH7" = c("CD28-CD80N_pH7.dat",224,101,2)
+)
+
+
+
 ##### FUNCTIONS #################
 
 dist_between_CAs <- function(A,CA_1,CA_2){
@@ -13,6 +38,7 @@ dist_between_CAs <- function(A,CA_1,CA_2){
   coords_2 <- matrix(A[,CA_2,],byrow=T,ncol=3)
   return(coords_2-coords_1)
 }
+
 
 Modulo <- function(M,CA_atom){
   A <- matrix(M[,CA_atom,],byrow=T,ncol=3)
@@ -29,24 +55,6 @@ CrossProduct <- function(Vec_1,Vec_2){
 
 
 
-##### List of files with XYZ coordinates  ############
-# These input files contain the have 3 columns: xyz coordinates
-# of every CA atom, of every recorded frame.
-# Input files are produce with a bash script from the .gro obtained 
-# from the simulations analysis
-
-# The items in the input list are:
-  #   input filename (.dat)
-  #   Number of CA atoms in the system
-  #   Number of frames recorded
-  #   A color code
-
-input_list = list(
-  "CD28_CD80N_pH5" = c("CD28-CD80N_pH5.dat",224,2446,1),
-  "CD28_CD80N_pH7" = c("CD28-CD80N_pH7.dat",224,2274,2)
-)
-
-
 
 ### ANALYSIS ##############
 
@@ -55,10 +63,6 @@ input_list = list(
 
 Tips <- c()
 colors <- c()
-
-# Choose a range of frames to analyse
-range_frame <- c(1:1000)
-
 
 
 # Data loading and processing
@@ -87,9 +91,9 @@ for (input in input_list){
   Vec_2 <- dist_between_CAs(A,102,18)
   
   Tips <- rbind(Tips,
-              cbind(CrossProduct(Vec_1,Vec_2)[range_frame,],
-                    Modulo(A,102)[range_frame],
-                    rep(color,diff(range(range_frame)))
+              cbind(CrossProduct(Vec_1,Vec_2),
+                    Modulo(A,102),
+                    rep(color,N_frames)
                     )
               )
   }

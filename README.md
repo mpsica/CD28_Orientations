@@ -1,12 +1,19 @@
 # CD28_Orientations
 
-With these two scripts we have computed the orientation of CD28 or CTLA4 with respect to CD80 along an all-atom simulation, as shown in Figure 6E.
+With these two scripts we have computed the orientation of CD28 or CTLA4 with respect to CD80 along an all-atom simulation, as shown in Figure 6E. 
 
-**First**, we simulated the complex of CD80 with CD28 or CTLA4 as described in Methods, and then the simulations were converted with ''*gmx trjconv*'' tool from GROMACS package to *.gro* format containing only coords of CA-atoms (help can be found in https://manual.gromacs.org/documentation/2016.4/onlinehelp/gmx-trjconv.html). Most importantly, to properly monitor the orientations, in this procedure trajectories are centered and fixed on the CA coordinates of CD80 (option *-fit rot+trans* of trjconv)  and only the CD28 or CTLA4 CA_coords are recorded. All CD28 or CTL4 CA-atoms are recoded. The following scripts filter the CA-atoms of interest.
+**First**, we simulated the complex of CD80 with CD28 or CTLA4 as described in Methods, and then the simulations were converted with ''*gmx trjconv*'' tool from GROMACS package to *.gro* format containing only coords of CA-atoms (help can be found in https://manual.gromacs.org/documentation/2016.4/onlinehelp/gmx-trjconv.html). Most importantly, to properly monitor the orientations, in this procedure trajectories are centered and fixed on the CA coordinates of CD80 (option *-fit rot+trans* of trjconv) and **all** CA_coords are recorded. The following Rscripts filter the CA-atoms of interest.
 
-This repo includes two examples of CA-simulations in *.gro* format produced as described. You can use this files as input to the following steps.
+As examples, this repo includes two files in *.gro* format of 10ns of CA-atoms trajectories produced as described. You can use this files as input to the following steps.
 
-**Second**, a bash script (*preprocess.sh*) is used to get information from the *.gro* file and produce the input files that will be analysed with the following R script.
+**Second**, a bash script (*preprocess.sh*) is used to get information from the *.gro* file and produce the input files that will be analysed with the following R script. Give execution permission to this script and run:
+
+    preprocess.sh [filename].gro
+
+The script writes [filename].dat file (input in the next step) and a returns information that you need to add in the following Rscript. This is necessary to properly format the data in the R routine. This information is:
+    -  Filename
+    -  Number of CA atoms
+    -  Number of frames
 
 **Third**, the Rscript (*analysis.R*) do the analysis with the coordinates of the CA-atoms. The Rscripts is autoexplanatory. Briefly, after proper rearrangement of the input information, the script compute the coords of two vectors: 
 

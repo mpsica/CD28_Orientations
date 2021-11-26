@@ -1,1 +1,3 @@
 *.dat
+.RData
+.Rhistory

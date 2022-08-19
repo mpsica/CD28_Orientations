@@ -1,6 +1,10 @@
 # CD28_Orientations
 ### Tools to monitor the orientation of protein A in complex to protein B
 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7010179.svg)](https://doi.org/10.5281/zenodo.7010179)
+
+
 -------------
 
 Soft requirements: Bash, R, RStudio (to produce the 3D graph). R Library required: 'rgl' (version 0.107.14, in our work, only for graph).

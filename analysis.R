@@ -1,6 +1,8 @@
 library(rgl)
 rm(list=ls(all=TRUE))
 
+# setwd(getwd())
+setwd("~/Laboratorio/CD28/analisis/trayectorias/CD28-CD80N_ch_gr/Fig3D_repo")
 ##### Setting up the system #####
 # Uncomment and edit accordingly
 
@@ -20,13 +22,15 @@ rm(list=ls(all=TRUE))
 
 # The items in the input list are:
   #   input filename (.dat)
-  #   Number of CA atoms in the system
+  #   Number of CA atoms in the system (Protein A + B)
   #   Number of frames recorded
   #   A color code (1,2,...)
 
 input_list = list(
-  "CD28_CD80N_pH5" = c("CD28-CD80N_pH5.dat",224,101,1),
-  "CD28_CD80N_pH7" = c("CD28-CD80N_pH7.dat",224,101,2)
+  "CD28_CD80N_pH5"  = c("CD28-CD80N_pH5.dat",224,401,1),
+  "CD28_CD80N_pH7"  = c("CD28-CD80N_pH7.dat",224,401,2),
+  "CTLA4_CD80N_pH5" = c("CTLA4-CD80N_pH5.dat",224,401,3),
+  "CTLA4_CD80N_pH7" = c("CTLA4-CD80N_pH7.dat",224,401,4)
 )
 
 
@@ -78,7 +82,7 @@ for (input in input_list){
   # Input data is loaded as a 3-columns matrix
   M <- matrix(scan(filename),ncol=1,byrow = T)
   
-  # This matris is converted to an array with the following dimensions:
+  # This matrix is converted to an array with the following dimensions:
   # Dim #1: x,y,z coordinaes 
   # Dim #2: number of CA
   # Dim #3: Frame
@@ -94,7 +98,7 @@ for (input in input_list){
                   
   # Saving result to csv files
   # Columns: x,y,z,modulo
-  write.csv(Result,file = paste0(filename,'.cvs'),row.names = F)
+  # write.csv(Result,file = paste0(filename,'.cvs'),row.names = F)
   
   Tips <- rbind(Tips,
               cbind(Result,rep(color,N_frames))
@@ -102,7 +106,7 @@ for (input in input_list){
   }
 
 pallete <- c("#E69F00","#009400","#cc79a7","#0000ff")
-Labs <- c("CD28, low pH", "CD28, nuetral pH")
+Labs <- c("CD28, low pH", "CD28, nuetral pH", "CTLA4, low pH", "CTLA4, nuetral pH")
 
 # Now, we plot in 3D the tips of the normal to the plane
 # that reflects the orientation of CD28 against CD80
@@ -129,7 +133,9 @@ aspect3d(1,1,1)
 
 legend3d("topright", legend = Labs[colors],
          pch = 16, col = pallete[colors] , cex=1)
+
+Fig3d <- rglwidget()  
+
+htmlwidgets::saveWidget(Fig3d, "Figure.html")
+
 rglwidget()  
-
-
-

@@ -1,5 +1,5 @@
-*.dat
 .RData
 .Rhistory
+*/
 whole*
-*.cvs
+*.html
